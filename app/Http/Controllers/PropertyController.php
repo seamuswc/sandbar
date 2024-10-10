@@ -12,16 +12,17 @@ class PropertyController extends Controller
 
     public function showMap()
     {
-        $properties = Property::all();  // Assuming you have a Property model
-        return view('index', compact('properties'));
+        // Get all properties with their associated images
+        $properties = Property::with('images')->get();
+       return view('index', compact('properties'));
     }
 
     // Display all properties for all users
     public function index()
     {
-        // Get all properties
-        $properties = Property::all();
-        return view('properties.index', compact('properties'));
+       // Get all properties with their associated images
+        $properties = Property::with('images')->get();
+       return view('properties.index', compact('properties'));
     }
 
     // Show the form to create a new property
@@ -51,7 +52,7 @@ class PropertyController extends Controller
         // Handle the image uploads if there are any
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/property_images');
+                $path = $image->store('property_images', 'public');
                 PropertyImage::create([
                     'property_id' => $property->id,
                     'image_url' => str_replace('public/', 'storage/', $path),
