@@ -37,9 +37,14 @@
             font-weight: bold;
         }
 
+        .phone-number {
+        
+    }
+
         header .logo img {
-            height: 50px; /* Increased logo height */
+            height: 60px; /* Increased logo height */
             vertical-align: middle;
+            width: 200px;
         }
 
         header .contact-info {
@@ -133,10 +138,10 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <img src="logo.png" alt="Company Logo"> Real Estate
+            <img src="{{ asset('images/gold_logo_text.png') }}" alt="Company Logo"> 
         </div>
         <div class="contact-info">
-            <span>Phone: +66 61 724 6882</span>
+            <span class="phone-number">Phone: +66 61 724 6882</span>
             <a>
                 <img src="{{ asset('images/line.png') }}" alt="Line Icon">
             </a>

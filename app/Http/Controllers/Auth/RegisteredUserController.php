@@ -19,6 +19,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+
+        if (env('REGISTRATION_DISABLED', false)) {
+            return redirect('/')->with('error', 'Registration is currently disabled.');
+        }
         return view('auth.register');
     }
 
@@ -29,6 +33,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+        if (env('REGISTRATION_DISABLED', false)) {
+            return redirect('/')->with('error', 'Registration is currently disabled.');
+        }
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
