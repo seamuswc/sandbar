@@ -1,0 +1,52 @@
+
+
+
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+// Function to open the modal and show images
+window.openModal = function(propertyId) {
+    // Find the property by its id
+    var property = properties.find(function(p) {
+        return p.id === propertyId;
+    });
+
+    // Clear any existing slides
+    var swiperWrapper = document.getElementById('swiper-wrapper');
+    swiperWrapper.innerHTML = '';
+
+    // Add slides for property images
+    property.images.forEach(function(image) {
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = '<img src="' + image.image_url + '" alt="' + property.title + '">';
+        swiperWrapper.appendChild(slide);
+    });
+
+    // Show the modal
+    modal.style.display = "block";
+
+    // Initialize Swiper.js
+    new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        loop: true
+    });
+}
