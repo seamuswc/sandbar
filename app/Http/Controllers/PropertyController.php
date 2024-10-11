@@ -54,11 +54,13 @@ class PropertyController extends Controller
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'building' => 'required|string|max:255',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif' // Image validation
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif', // Image validation
+            'description' => 'required|string',
+
         ]);
 
         // Create the property
-        $property = Property::create($request->only(['title', 'price', 'size', 'lat', 'lng', 'building']));
+        $property = Property::create($request->only(['title', 'price', 'size', 'lat', 'lng', 'building', 'description']));
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -95,12 +97,13 @@ class PropertyController extends Controller
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'building' => 'required|string|max:255',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif',
+            'description' => 'required|string'
         ]);
 
         // Find the property and update it
         $property = Property::findOrFail($id);
-        $property->update($request->only(['title', 'price', 'size', 'lat', 'lng', 'building']));
+        $property->update($request->only(['title', 'price', 'size', 'lat', 'lng', 'building', 'description']));
 
         // Handle new image uploads if any
         if ($request->hasFile('images')) {
