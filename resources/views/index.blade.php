@@ -146,7 +146,7 @@
         <div class="contact-info">
             <span class="phone-number">+66 61 724 6882</span>
             <a>
-                <div class="line-it-button" data-lang="en" data-type="friend" data-env="REAL"   data-lineId="+66617246882" style="display: none;"></div>
+                <div class="line-it-button" data-lang="en" data-type="friend" data-env="REAL"   data-lineId="+660997358205" style="display: none;"></div>
                 <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>      
             </a>
             <a>
