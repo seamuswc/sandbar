@@ -202,7 +202,7 @@
                 var latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
 
                 const bunnyIcon = {
-                    url: "images/mew.jpg", // Replace with the path to your bunny image
+                    url: "images/rabbit.png", // Replace with the path to your bunny image
                     scaledSize: new google.maps.Size(25, 25), // Resize the icon if necessary
                     
                 };
