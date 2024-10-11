@@ -144,7 +144,7 @@
             <img src="{{ asset('images/gold_logo_text.png') }}" alt="Company Logo"> 
         </div>
         <div class="contact-info">
-            <span class="phone-number">Phone: +66 61 724 6882</span>
+            <span class="phone-number">+66 61 724 6882</span>
             <a>
                 <img src="{{ asset('images/line.png') }}" alt="Line Icon">
             </a>
@@ -171,7 +171,7 @@
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13, // Adjust the zoom level as needed
-                center: { lat: 12.9164, lng: 100.8622 } // Pratamnak Hill, Pattaya
+                center: { lat: 12.9164, lng: 100.8722 } // Pratamnak Hill, Pattaya (moved slightly to the right)
             });
 
 

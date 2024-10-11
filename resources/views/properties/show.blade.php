@@ -107,7 +107,7 @@
         <div class="property-info">
             <p><strong>Price:</strong> {{ $property->price }}</p>
             <p><strong>Size:</strong> {{ $property->size }} sqm</p>
-            <p><strong>Description:</strong> {{ $property->description }}</p>
+            <p>{{ $property->description }}</p>
         </div>
     </div>
 </body>
