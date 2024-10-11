@@ -203,7 +203,7 @@
 
                 const bunnyIcon = {
                     url: "images/mew.jpg", // Replace with the path to your bunny image
-                    scaledSize: new google.maps.Size(50, 50), // Resize the icon if necessary
+                    scaledSize: new google.maps.Size(25, 25), // Resize the icon if necessary
                     
                 };
                 
