@@ -166,13 +166,15 @@
     </div>
 
     <script>
-       function initMap() {
+       function initMap() 
+       {
            
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13, // Adjust the zoom level as needed
                 center: { lat: 12.9164, lng: 100.8722 }, // Pratamnak Hill, Pattaya (moved slightly to the right)
-                gestureHandling: 'greedy' // Allows panning the map with one finger
+                gestureHandling: 'greedy',
+                mapTypeControl: false // Allows panning the map with one finger
             });
 
 
@@ -199,10 +201,17 @@
                 var firstProperty = propertiesInSameLocation[0];
                 var latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
 
+                const bunnyIcon = {
+                    url: "images/mew.jpg", // Replace with the path to your bunny image
+                    scaledSize: new google.maps.Size(50, 50), // Resize the icon if necessary
+                    
+                };
+                
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
-                    title: firstProperty.title
+                    title: firstProperty.title,
+                    icon: bunnyIcon
                 });
 
                 var infoWindowContent = '';  // No space at the top of the popup
