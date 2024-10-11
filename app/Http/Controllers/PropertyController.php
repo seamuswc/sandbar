@@ -54,7 +54,7 @@ class PropertyController extends Controller
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'building' => 'required|string|max:255',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Image validation
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif' // Image validation
         ]);
 
         // Create the property
@@ -95,7 +95,7 @@ class PropertyController extends Controller
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'building' => 'required|string|max:255',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif'
         ]);
 
         // Find the property and update it
