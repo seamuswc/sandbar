@@ -6,6 +6,10 @@ use App\Models\PropertyImage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log; 
+
+
 
 class PropertyController extends Controller
 {
@@ -25,14 +29,21 @@ class PropertyController extends Controller
        return view('properties.index', compact('properties'));
     }
 
+    public function show($id)
+    {
+        // Fetch the property by ID
+        $property = Property::with('images')->findOrFail($id);
+
+        // Return the view with the property data
+        return view('properties.show', compact('property'));
+    }
+
     // Show the form to create a new property
-    // Show the form for creating a new property
     public function create()
     {
         return view('properties.create');
     }
 
-    // Store a newly created property in the database
     public function store(Request $request)
     {
         // Validate the request
@@ -49,19 +60,22 @@ class PropertyController extends Controller
         // Create the property
         $property = Property::create($request->only(['title', 'price', 'size', 'lat', 'lng', 'building']));
 
-        // Handle the image uploads if there are any
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
+                // Store image in 'storage/app/public/property_images'
                 $path = $image->store('property_images', 'public');
+                
+                // Save the relative path (without 'storage/') to the database
                 PropertyImage::create([
                     'property_id' => $property->id,
-                    'image_url' => str_replace('public/', 'storage/', $path),
+                    'image_url' => $path,  // Store 'property_images/filename.jpg'
                 ]);
             }
         }
 
         return redirect()->route('properties.index')->with('success', 'Property added successfully!');
     }
+
 
     // Show the form to edit a property
     public function edit($id)
@@ -71,7 +85,6 @@ class PropertyController extends Controller
         return view('properties.edit', compact('property'));
     }
 
-    // Update an existing property
     public function update(Request $request, $id)
     {
         // Validate the request
@@ -89,13 +102,16 @@ class PropertyController extends Controller
         $property = Property::findOrFail($id);
         $property->update($request->only(['title', 'price', 'size', 'lat', 'lng', 'building']));
 
-        // Handle image uploads if new images are uploaded
+        // Handle new image uploads if any
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/property_images');
+                // Store the image
+                $path = $image->store('property_images', 'public');
+                
+                // Save the relative path
                 PropertyImage::create([
                     'property_id' => $property->id,
-                    'image_url' => str_replace('public/', 'storage/', $path),
+                    'image_url' => $path,  // Store 'property_images/filename.jpg'
                 ]);
             }
         }
@@ -103,13 +119,44 @@ class PropertyController extends Controller
         return redirect()->route('properties.index')->with('success', 'Property updated successfully!');
     }
 
-    // Delete a property
+
     public function destroy($id)
     {
-        // Find the property by its ID and delete it
-        $property = Property::findOrFail($id);
-        $property->delete();
+        // Start logging
+        Log::info("Starting the deletion process for property ID: {$id}");
 
-        return redirect()->route('properties.index')->with('success', 'Property deleted successfully!');
+        // Find the property by its ID
+        $property = Property::findOrFail($id);
+        Log::info("Found property: " . $property->title);
+
+        // Delete all associated images from storage and database
+        foreach ($property->images as $image) {
+            Log::info("Processing image ID: {$image->id}, URL: {$image->image_url}");
+
+            // Get the relative path stored in the database (e.g., 'property_images/filename.jpg')
+            $filePath = $image->image_url;  // Use the exact path stored in the database
+            Log::info("Attempting to delete file at path: {$filePath}");
+
+            // Check if the file exists in storage
+            if (Storage::exists($filePath)) {
+                // Delete the image file from 'storage/app/public/property_images'
+                Storage::delete($filePath);
+                Log::info("Deleted file: {$filePath}");
+            } else {
+                Log::warning("File not found: {$filePath}");
+            }
+            
+
+            // Delete the image record from the database
+            $image->delete();
+            Log::info("Deleted image record from the database for image ID: {$image->id}");
+        }
+
+        // Delete the property itself
+        $property->delete();
+        Log::info("Deleted property with ID: {$property->id}");
+
+        return redirect()->route('properties.index')->with('success', 'Property and associated images deleted successfully!');
     }
+
 }

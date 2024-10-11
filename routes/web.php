@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PropertyController::class, 'showMap']);
 
+Route::get('/properties/show/{id}', [PropertyController::class, 'show'])->name('properties.show');
+
+
 Route::get('/dashboard', function () {
     // Call the Laravel built-in 'inspire' command to get a random inspirational quote
     $quote = Artisan::call('inspire');

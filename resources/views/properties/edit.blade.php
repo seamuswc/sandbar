@@ -56,6 +56,11 @@
             <input type="file" name="images[]" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" multiple>
         </div>
 
+        <div class="mb-4">
+            <label for="description" class="block text-lg font-semibold mb-2">Description</label>
+            <textarea name="description" rows="8" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter property description" required></textarea>
+        </div>
+
         <!-- Update Button -->
         <div class="flex justify-center">
             <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">

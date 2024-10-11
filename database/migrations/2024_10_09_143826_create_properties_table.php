@@ -20,6 +20,8 @@ return new class extends Migration
             $table->decimal('lat', 19, 15);
             $table->decimal('lng', 19, 15);
             $table->string('building');
+            $table->string('video_url');
+            $table->text('description'); 
             $table->timestamps();
         });
 

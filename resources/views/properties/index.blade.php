@@ -26,7 +26,11 @@
                 <tbody>
                     @foreach ($properties as $property)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-2 px-4 border">{{ $property->title }}</td>
+                            <td class="py-2 px-4 border">
+                                <a href="{{ route('properties.show', $property->id) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">
+                                    {{ $property->title }}
+                                </a>
+                            </td>
                             <td class="py-2 px-4 border">{{ $property->price }}</td>
                             <td class="py-2 px-4 border">{{ $property->size }} sqm</td>
                             <td class="py-2 px-4 border">{{ $property->lat }}, {{ $property->lng }}</td>

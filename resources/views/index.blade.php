@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Real Estate Listings</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* General Styles */
@@ -137,6 +138,8 @@
 <body>
     <!-- Header -->
     <header>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
         <div class="logo">
             <img src="{{ asset('images/gold_logo_text.png') }}" alt="Company Logo"> 
         </div>
@@ -167,7 +170,7 @@
            
 
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15, // Adjust the zoom level as needed
+                zoom: 13, // Adjust the zoom level as needed
                 center: { lat: 12.9164, lng: 100.8622 } // Pratamnak Hill, Pattaya
             });
 
@@ -209,18 +212,20 @@
                         infoWindowContent += '<br>';  // Add a line break between properties
                     }
                     // Check if the property has images and the images array is defined
-                    if (property.images && property.images.length > 0) {
+                    //if (property.images && property.images.length > 0) {
                         var imageUrl = "{{ asset('storage/') }}" + '/' + property.images[0].image_url; // Use the first image for now
 
                         // Open image popup when title is clicked
-                        infoWindowContent += '<div style="font-size: 16px; font-weight: bold; cursor: pointer;" onclick="openImageModal(\'' + imageUrl + '\')">' + 
+                        var propertyUrl = "{{ route('properties.show', ':id') }}"; // Laravel route helper
+                        propertyUrl = propertyUrl.replace(':id', property.id); // Replace ':id' with the actual property id
+
+                        infoWindowContent += '<a href="' + propertyUrl + '" target="_blank" style="font-size: 16px; font-weight: bold;">' + 
                                                 property.title + 
-                                            '</div>' +
+                                            '</a>' +
                                             '<div style="font-size: 14px; font-weight: bold;">' + 
                                                 'Price: ' + property.price + ' | ' +
                                                 'Size: ' + property.size + ' sqm' +
-                                            '</div>';
-                    } else {
+                                            '</div>';                    /*} else {
                         // No images available, display a placeholder or skip the image logic
                         infoWindowContent += '<div style="font-size: 16px; font-weight: bold; cursor: pointer;" onclick="openImageModal(\'placeholder.jpg\')">' + 
                                                 property.title + 
@@ -229,7 +234,7 @@
                                                 'Price: ' + property.price + ' | ' +
                                                 'Size: ' + property.size + ' sqm' +
                                             '</div>';
-                    }
+                    }*/
                 });
 
                 var infoWindow = new google.maps.InfoWindow({

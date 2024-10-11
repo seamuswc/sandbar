@@ -28,7 +28,7 @@
         <!-- Latitude, Longitude (Optional) -->
         <div class="mb-4">
             <label for="lat_lng" class="block text-lg font-semibold mb-2">Latitude, Longitude (optional)</label>
-            <input type="text" id="lat_lng" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. 35.6895, 139.6917">
+            <input type="text" id="lat_lng" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="google right click">
         </div>
 
         <!-- Latitude -->
@@ -51,8 +51,14 @@
 
         <!-- Property Images -->
         <div class="mb-4">
-            <label for="images" class="block text-lg font-semibold mb-2">Property Images</label>
+            <label for="images" class="block text-lg font-semibold mb-2">Property Images (MAX 50 MB)</label>
             <input type="file" name="images[]" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" multiple>
+        </div>
+
+
+        <div class="mb-4">
+            <label for="description" class="block text-lg font-semibold mb-2">Description</label>
+            <textarea name="description" rows="8" class="form-input w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter property description" required></textarea>
         </div>
 
         <!-- Submit Button -->
