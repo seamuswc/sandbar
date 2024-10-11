@@ -171,7 +171,8 @@
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13, // Adjust the zoom level as needed
-                center: { lat: 12.9164, lng: 100.8722 } // Pratamnak Hill, Pattaya (moved slightly to the right)
+                center: { lat: 12.9164, lng: 100.8722 }, // Pratamnak Hill, Pattaya (moved slightly to the right)
+                gestureHandling: 'greedy' // Allows panning the map with one finger
             });
 
 
