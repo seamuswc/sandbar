@@ -146,7 +146,8 @@
         <div class="contact-info">
             <span class="phone-number">+66 61 724 6882</span>
             <a>
-                <img src="{{ asset('images/line.png') }}" alt="Line Icon">
+                <div class="line-it-button" data-lang="en" data-type="friend" data-env="REAL"   data-lineId="@+66617246882" style="display: none;"></div>
+                <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>      
             </a>
             <a>
                 <img src="{{ asset('images/whatsapp.png') }}" alt="WhatsApp Icon">
