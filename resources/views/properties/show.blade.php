@@ -108,11 +108,12 @@
             <p><strong>Price:</strong> {{ $property->price }}</p>
             <p><strong>Size:</strong> {{ $property->size }} sqm</p>
             <p><strong>Building:</strong> {{ $property->building }}</p>
+            <pre>
             <p>
-                <pre>
                     {{ $property->description }}
-                </pre>
             </p>
+            </pre>
+
         </div>
     </div>
 </body>
