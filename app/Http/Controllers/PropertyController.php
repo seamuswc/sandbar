@@ -17,7 +17,8 @@ class PropertyController extends Controller
     public function showMap()
     {
         // Get all properties with their associated images
-        $properties = Property::with('images')->get();
+       // $properties = Property::with('images')->get();
+       $properties = Property::all();
        return view('index', compact('properties'));
     }
 
