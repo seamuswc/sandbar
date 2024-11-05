@@ -180,7 +180,7 @@
                     scaledSize: new google.maps.Size(30, 30)
                 };
 
-                const marker = new google.maps.Marker({
+                const marker = new google.maps.marker.AdvancedMarkerElement({
                     position: latLng,
                     map: map,
                     title: firstProperty.title,
