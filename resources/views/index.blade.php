@@ -172,8 +172,9 @@
                 const firstProperty = propertiesInSameLocation[0];
                 const latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
                 console.log("----SAME LOCATION");
-                console.log(propertiesInSameLocation);
+                console.log(JSON.stringify(propertiesInSameLocation, null, 2));
                 console.log("----");
+
                 const bunnyIcon = {
                     url: "{{ asset('images/rabbit2.png') }}",
                     scaledSize: new google.maps.Size(30, 30)
@@ -189,7 +190,7 @@
                 let infoWindowContent = '';
                 propertiesInSameLocation.forEach((property, index) => {
                     if (index > 0) infoWindowContent += '<br>';
-                    const propertyUrl = "{{ route('properties.show', ':id') }}".replace(':id', property.id);
+                    let propertyUrl = "{{ route('properties.show', ':id') }}".replace(':id', property.id);
                     infoWindowContent += `<a href="${propertyUrl}" target="_blank" style="font-size: 16px; font-weight: bold;">${property.title}</a>
                                           <div style="font-size: 14px; font-weight: bold;">
                                               Price: ${property.price} | Size: ${property.size} sqm
