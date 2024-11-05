@@ -210,6 +210,7 @@
             });
         }
 
+        /*
         function openImageModal(imageSrc) {
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
@@ -225,7 +226,7 @@
             if (event.target === document.getElementById('imageModal')) {
                 document.getElementById('imageModal').style.display = "none";
             }
-        };
+        };*/
     </script>
 
     <!-- Include Google Maps API -->
