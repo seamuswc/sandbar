@@ -19,37 +19,33 @@
         #map {
             height: 500px;
             width: 100%;
-            flex-grow: 1; /* Make the map take up remaining space */
+            flex-grow: 1;
         }
 
         /* Header Styles */
         header {
             background-color: #333;
             color: #fff;
-            padding: 20px 20px; /* Increased padding for larger header */
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 20px; /* Increase font size */
+            font-size: 20px;
         }
 
         header .logo {
-            font-size: 30px; /* Increased logo font size */
+            font-size: 30px;
             font-weight: bold;
         }
 
-        .phone-number {
-        
-    }
-
         header .logo img {
-            height: 60px; /* Increased logo height */
-            vertical-align: middle;
+            height: 60px;
             width: 200px;
+            vertical-align: middle;
         }
 
         header .contact-info {
-            font-size: 18px; /* Increased contact info font size */
+            font-size: 18px;
             display: flex;
             align-items: center;
         }
@@ -65,12 +61,12 @@
         }
 
         header .contact-info img {
-            width: 28px; /* Increased icon size */
+            width: 28px;
             height: 28px;
             margin-left: 10px;
         }
 
-        /* Modal styles */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -79,13 +75,13 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
@@ -100,7 +96,6 @@
 
         .close {
             color: #aaa;
-            float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
@@ -109,7 +104,6 @@
         .close:hover, .close:focus {
             color: black;
             text-decoration: none;
-            cursor: pointer;
         }
 
         /* Responsive Styles */
@@ -117,11 +111,7 @@
             header {
                 flex-direction: column;
                 text-align: center;
-                font-size: 16px; /* Slightly smaller for mobile */
-            }
-
-            header .logo, header .contact-info {
-                margin: 10px 0;
+                font-size: 16px;
             }
 
             #map {
@@ -138,8 +128,6 @@
 <body>
     <!-- Header -->
     <header>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-
         <div class="logo">
             <img src="{{ asset('images/gold_logo_text.png') }}" alt="Company Logo"> 
         </div>
@@ -166,126 +154,81 @@
     </div>
 
     <script>
-       function initMap() 
-       {
-           
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13, // Adjust the zoom level as needed
-                center: { lat: 12.9164, lng: 100.8722 }, // Pratamnak Hill, Pattaya (moved slightly to the right)
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: { lat: 12.9164, lng: 100.8722 },
                 gestureHandling: 'greedy',
-                mapTypeControl: false // Allows panning the map with one finger
+                mapTypeControl: false
             });
 
+            const properties = @json($properties);
+            const groupedProperties = {};
 
-            // Fetch properties from Laravel (passed as a JS object)
-            var properties = @json($properties);
-
-            // Group properties by lat/lng
-            var groupedProperties = {};
-
-            properties.forEach(function (property) {
-                var latLngKey = property.lat + ',' + property.lng;
-
+            properties.forEach((property) => {
+                const latLngKey = `${property.lat},${property.lng}`;
                 if (!groupedProperties[latLngKey]) {
                     groupedProperties[latLngKey] = [];
                 }
                 groupedProperties[latLngKey].push(property);
             });
 
-            // Loop through each group of properties and create markers
-            Object.keys(groupedProperties).forEach(function (latLngKey) {
-                var propertiesInSameLocation = groupedProperties[latLngKey];
-
-                // Use the lat/lng of the first property in the group
-                var firstProperty = propertiesInSameLocation[0];
-                var latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
+            Object.keys(groupedProperties).forEach((latLngKey) => {
+                const propertiesInSameLocation = groupedProperties[latLngKey];
+                const firstProperty = propertiesInSameLocation[0];
+                const latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
 
                 const bunnyIcon = {
-                    url: "images/rabbit2.png", // Replace with the path to your bunny image
-                    scaledSize: new google.maps.Size(30, 30), // Resize the icon if necessary
-                    
+                    url: "{{ asset('images/rabbit2.png') }}",
+                    scaledSize: new google.maps.Size(30, 30)
                 };
-                
-                var marker = new google.maps.Marker({
+
+                const marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
                     title: firstProperty.title,
                     icon: bunnyIcon
                 });
 
-                var infoWindowContent = '';  // No space at the top of the popup
-
-                propertiesInSameLocation.forEach(function (property, index) {
-                    // Add new empty line only between different properties
-                    if (index > 0) {
-                        infoWindowContent += '<br>';  // Add a line break between properties
-                    }
-                    // Check if the property has images and the images array is defined
-                    //if (property.images && property.images.length > 0) {
-                        var imageUrl = "{{ asset('storage/') }}" + '/' + property.images[0].image_url; // Use the first image for now
-
-                        // Open image popup when title is clicked
-                        var propertyUrl = "{{ route('properties.show', ':id') }}"; // Laravel route helper
-                        propertyUrl = propertyUrl.replace(':id', property.id); // Replace ':id' with the actual property id
-
-                        infoWindowContent += '<a href="' + propertyUrl + '" target="_blank" style="font-size: 16px; font-weight: bold;">' + 
-                                                property.title + 
-                                            '</a>' +
-                                            '<div style="font-size: 14px; font-weight: bold;">' + 
-                                                'Price: ' + property.price + ' | ' +
-                                                'Size: ' + property.size + ' sqm' +
-                                            '</div>';                    /*} else {
-                        // No images available, display a placeholder or skip the image logic
-                        infoWindowContent += '<div style="font-size: 16px; font-weight: bold; cursor: pointer;" onclick="openImageModal(\'placeholder.jpg\')">' + 
-                                                property.title + 
-                                            '</div>' +
-                                            '<div style="font-size: 14px; font-weight: bold;">' + 
-                                                'Price: ' + property.price + ' | ' +
-                                                'Size: ' + property.size + ' sqm' +
-                                            '</div>';
-                    }*/
+                let infoWindowContent = '';
+                propertiesInSameLocation.forEach((property, index) => {
+                    if (index > 0) infoWindowContent += '<br>';
+                    const propertyUrl = "{{ route('properties.show', ':id') }}".replace(':id', property.id);
+                    infoWindowContent += `<a href="${propertyUrl}" target="_blank" style="font-size: 16px; font-weight: bold;">${property.title}</a>
+                                          <div style="font-size: 14px; font-weight: bold;">
+                                              Price: ${property.price} | Size: ${property.size} sqm
+                                          </div>`;
                 });
 
-                var infoWindow = new google.maps.InfoWindow({
+                const infoWindow = new google.maps.InfoWindow({
                     content: infoWindowContent
                 });
 
-                // Add click event listener to the marker
-                marker.addListener('click', function () {
+                marker.addListener('click', () => {
                     infoWindow.open(map, marker);
                 });
             });
         }
 
-        // Function to open the modal and display the image
         function openImageModal(imageSrc) {
-            var modal = document.getElementById('imageModal');
-            var modalImage = document.getElementById('modalImage');
-            modalImage.src = imageSrc;  // Set the image source to the clicked property's image
-            modal.style.display = "block";  // Display the modal
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.style.display = "flex";
         }
 
-        // Close modal functionality
-        var modal = document.getElementById('imageModal');
-        var closeModal = document.getElementsByClassName('close')[0];
-
-        // Close the modal when clicking on the 'x'
-        closeModal.onclick = function() {
-            modal.style.display = "none";
+        document.querySelector('.close').onclick = () => {
+            document.getElementById('imageModal').style.display = "none";
         };
 
-        // Close the modal when clicking outside the modal content
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        window.onclick = (event) => {
+            if (event.target === document.getElementById('imageModal')) {
+                document.getElementById('imageModal').style.display = "none";
             }
         };
     </script>
 
     <!-- Include Google Maps API -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVdAS-3mrNYARIDmqn2dP1tG1Khqv5GoM&callback=initMap">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVdAS-3mrNYARIDmqn2dP1tG1Khqv5GoM&callback=initMap"></script>
 </body>
 </html>
