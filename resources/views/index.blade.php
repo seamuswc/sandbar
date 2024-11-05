@@ -156,18 +156,14 @@
 
             const properties = @json($properties);
             const groupedProperties = {};
-            console.log(properties);
             properties.forEach((property) => {
-                console.log('----');
-                console.log(property);
-
+               
                 const latLngKey = `${property.lat},${property.lng}`;
                 if (!groupedProperties[latLngKey]) {
                     groupedProperties[latLngKey] = [];
                 }
                 groupedProperties[latLngKey].push(property);
-                console.log('----GROUP____' + latLngKey);
-                console.log(groupedProperties[latLngKey]);
+                
                 
             });
 
@@ -175,7 +171,9 @@
                 const propertiesInSameLocation = groupedProperties[latLngKey];
                 const firstProperty = propertiesInSameLocation[0];
                 const latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
-
+                console.log("----SAME LOCATION");
+                console.log(propertiesInSameLocation);
+                console.log("----");
                 const bunnyIcon = {
                     url: "{{ asset('images/rabbit2.png') }}",
                     scaledSize: new google.maps.Size(30, 30)
@@ -196,6 +194,9 @@
                                           <div style="font-size: 14px; font-weight: bold;">
                                               Price: ${property.price} | Size: ${property.size} sqm
                                           </div>`;
+                console.log("----forEACH");
+                console.log(property +"   " + index);
+                console.log("----");
                 });
 
                 const infoWindow = new google.maps.InfoWindow({
