@@ -145,14 +145,6 @@
     <!-- Map -->
     <div id="map"></div>
 
-    <!-- Modal to show image -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <img id="modalImage" src="" alt="Property Image">
-        </div>
-    </div>
-
     <script>
         function initMap() {
             const map = new google.maps.Map(document.getElementById('map'), {
@@ -164,13 +156,19 @@
 
             const properties = @json($properties);
             const groupedProperties = {};
-
+            console.log(properties);
             properties.forEach((property) => {
+                console.log('----');
+                console.log(property);
+
                 const latLngKey = `${property.lat},${property.lng}`;
                 if (!groupedProperties[latLngKey]) {
                     groupedProperties[latLngKey] = [];
                 }
                 groupedProperties[latLngKey].push(property);
+                console.log('----GROUP____' + latLngKey);
+                console.log(groupedProperties[latLngKey]);
+                
             });
 
             Object.keys(groupedProperties).forEach((latLngKey) => {
@@ -210,23 +208,7 @@
             });
         }
 
-        /*
-        function openImageModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            modalImage.src = imageSrc;
-            modal.style.display = "flex";
-        }
-
-        document.querySelector('.close').onclick = () => {
-            document.getElementById('imageModal').style.display = "none";
-        };
-
-        window.onclick = (event) => {
-            if (event.target === document.getElementById('imageModal')) {
-                document.getElementById('imageModal').style.display = "none";
-            }
-        };*/
+       
     </script>
 
     <!-- Include Google Maps API -->
