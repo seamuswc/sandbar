@@ -19,6 +19,3 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-composer-lock.json
-package-lock.json
-rand.txt
