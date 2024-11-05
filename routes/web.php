@@ -6,7 +6,7 @@ use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PropertyController::class, 'showMap']);
+Route::get('/', [PropertyController::class, 'showMap'])->name('show_map');
 
 Route::get('/properties/show/{id}', [PropertyController::class, 'show'])->name('properties.show');
 
