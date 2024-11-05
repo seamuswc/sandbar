@@ -44,6 +44,19 @@
             vertical-align: middle;
         }
 
+        header .map-links {
+            display: flex;
+            gap: 15px; /* Adds spacing between links */
+            font-size: 18px;
+        }
+
+        header .map-links a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
         header .contact-info {
             font-size: 18px;
             display: flex;
@@ -66,48 +79,12 @@
             margin-left: 10px;
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            text-align: center;
-        }
-
-        .modal img {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-        }
-
-        .close {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover, .close:focus {
-            color: black;
-            text-decoration: none;
-        }
-
-        /* Responsive Styles */
+        /* Hide Map Links on Mobile */
         @media (max-width: 768px) {
+            .map-links {
+                display: none;
+            }
+
             header {
                 flex-direction: column;
                 text-align: center;
@@ -116,10 +93,6 @@
 
             #map {
                 height: 300px;
-            }
-
-            .modal-content {
-                width: 90%;
             }
         }
     </style>
@@ -131,6 +104,16 @@
         <div class="logo">
             <img src="{{ asset('images/gold_logo_text.png') }}" alt="Company Logo"> 
         </div>
+        
+        <!-- Map Links -->
+        <div class="map-links">
+            <a onclick="zoomToLocation(12.9495, 100.8875)">North Pattaya</a> <!-- Updated coordinate for North Pattaya -->
+            <a onclick="zoomToLocation(12.9352, 100.8985)">Central Pattaya</a> <!-- Updated coordinate for Central Pattaya -->
+            <a onclick="zoomToLocation(12.9242, 100.8786)">South Pattaya</a> <!-- Updated coordinate for South Pattaya -->
+            <a onclick="zoomToLocation(12.9179, 100.8551)">Pratumnak Hill</a> <!-- Updated coordinate for Pratumnak Hill -->
+        </div>
+
+        <!-- Contact Info -->
         <div class="contact-info">
             <span class="phone-number">+66 61 724 6882</span>
             <a href="https://line.me/ti/p/mGH5q9eE4F">
@@ -146,9 +129,11 @@
     <div id="map"></div>
 
     <script>
+        let map;
+
         function initMap() {
-            const map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
                 center: { lat: 12.9164, lng: 100.8722 },
                 gestureHandling: 'greedy',
                 mapTypeControl: false
@@ -157,30 +142,24 @@
             const properties = @json($properties);
             const groupedProperties = {};
             properties.forEach((property) => {
-               
                 const latLngKey = `${property.lat},${property.lng}`;
                 if (!groupedProperties[latLngKey]) {
                     groupedProperties[latLngKey] = [];
                 }
                 groupedProperties[latLngKey].push(property);
-                
-                
             });
 
             Object.keys(groupedProperties).forEach((latLngKey) => {
                 const propertiesInSameLocation = groupedProperties[latLngKey];
                 const firstProperty = propertiesInSameLocation[0];
                 const latLng = { lat: parseFloat(firstProperty.lat), lng: parseFloat(firstProperty.lng) };
-                console.log("----SAME LOCATION");
-                console.log(JSON.stringify(propertiesInSameLocation, null, 2));
-                console.log("----");
 
                 const bunnyIcon = {
                     url: "{{ asset('images/rabbit2.png') }}",
                     scaledSize: new google.maps.Size(30, 30)
                 };
 
-                const marker = new google.maps.marker.AdvancedMarkerElement({
+                const marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
                     title: firstProperty.title,
@@ -195,10 +174,6 @@
                                           <div style="font-size: 14px; font-weight: bold;">
                                               Price: ${property.price} | Size: ${property.size} sqm
                                           </div>`;
-                console.log("----forEACH");
-                console.log(index);
-                console.log(JSON.stringify(property, null, 2));
-                console.log("----");
                 });
 
                 const infoWindow = new google.maps.InfoWindow({
@@ -211,7 +186,11 @@
             });
         }
 
-       
+        // Function to zoom and center the map at a given latitude and longitude
+        function zoomToLocation(lat, lng) {
+            map.setCenter({ lat: lat, lng: lng });
+            map.setZoom(15); // Adjust the zoom level as needed
+        }
     </script>
 
     <!-- Include Google Maps API -->
