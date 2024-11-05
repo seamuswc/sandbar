@@ -196,7 +196,8 @@
                                               Price: ${property.price} | Size: ${property.size} sqm
                                           </div>`;
                 console.log("----forEACH");
-                console.log(property +"   " + index);
+                console.log(index);
+                console.log(JSON.stringify(property, null, 2));
                 console.log("----");
                 });
 
