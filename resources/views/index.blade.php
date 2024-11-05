@@ -145,10 +145,10 @@
         </div>
         <div class="contact-info">
             <span class="phone-number">+66 61 724 6882</span>
-            <a>
+            <a href="https://line.me/ti/p/mGH5q9eE4F">
                 <img src="{{ asset('images/line.png') }}" alt="Line Icon">      
             </a>
-            <a>
+            <a href="https://wa.me/+66617246882">
                 <img src="{{ asset('images/whatsapp.png') }}" alt="WhatsApp Icon">
             </a>
         </div>

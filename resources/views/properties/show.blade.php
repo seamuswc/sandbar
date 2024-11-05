@@ -103,13 +103,13 @@
             @endforeach
         </div>
 
-        <!-- Property Info -->
+        <!-- Property Info {{ $property->description }}-->
         <div class="property-info">
             <p><strong>Price:</strong> {{ $property->price }}</p>
             <p><strong>Size:</strong> {{ $property->size }} sqm</p>
             <p><strong>Building:</strong> {{ $property->building }}</p>
             <p>
-                    {{ $property->description }}
+                    {!! nl2br(e($property->description)) !!}
             </p>
 
         </div>
