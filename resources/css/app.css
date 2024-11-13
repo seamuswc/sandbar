@@ -81,4 +81,12 @@
             .map-links {
                 display: none !important;
             }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+                font-size: 16px;
+            }
+
+
         }
