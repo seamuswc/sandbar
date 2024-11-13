@@ -16,10 +16,14 @@
         
         <!-- Map Links -->
         <div class="map-links">
-            <a onclick="zoomToLocation(12.9495, 100.8875)">North Pattaya</a> <!-- Updated coordinate for North Pattaya -->
-            <a onclick="zoomToLocation(12.9352, 100.8985)">Central Pattaya</a> <!-- Updated coordinate for Central Pattaya -->
-            <a onclick="zoomToLocation(12.9242, 100.8786)">South Pattaya</a> <!-- Updated coordinate for South Pattaya -->
-            <a onclick="zoomToLocation(12.9179, 100.8551)">Pratumnak Hill</a> <!-- Updated coordinate for Pratumnak Hill -->
+        <div class="map-links">
+            <a onclick="zoomToLocation(12.9495, 100.8875)">North</a> <!-- Updated coordinate for North Pattaya -->
+            <a onclick="zoomToLocation(12.9352, 100.8985)">Central</a> <!-- Updated coordinate for Central Pattaya -->
+            <a onclick="zoomToLocation(12.9242, 100.8786)">South</a> <!-- Updated coordinate for South Pattaya -->
+            <a onclick="zoomToLocation(12.9179, 100.8551)">Pratumnak</a> <!-- Updated coordinate for Pratumnak Hill -->
+            <a onclick="zoomToLocation(12.9000, 100.8625)">Jomtien</a> <!-- Coordinate for Jomtien -->
+        </div>
+
         </div>
 
         <!-- Contact Info -->
