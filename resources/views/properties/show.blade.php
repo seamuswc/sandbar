@@ -112,6 +112,13 @@
                     {!! nl2br(e($property->description)) !!}
             </p>
 
+            @auth <!-- Ensure only the uploader sees this -->
+                <div class="mb-4">
+                    <h2 class="text-lg font-semibold">Notes</h2>
+                    <p>{{ $property->notes }}</p>
+                </div>
+            @endauth
+
         </div>
     </div>
 </body>

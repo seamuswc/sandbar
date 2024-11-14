@@ -18,7 +18,8 @@ class Property extends Model
         'lat',
         'lng',
         'building',
-        'description'
+        'description',
+        'notes'
     ];
     
     public function images()
