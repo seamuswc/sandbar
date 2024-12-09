@@ -16,10 +16,14 @@
         
         <!-- Map Links -->
         <div class="map-links">
-            <a onclick="zoomToLocation(12.9495, 100.8875)">North Pattaya</a> <!-- Updated coordinate for North Pattaya -->
-            <a onclick="zoomToLocation(12.9352, 100.8985)">Central Pattaya</a> <!-- Updated coordinate for Central Pattaya -->
-            <a onclick="zoomToLocation(12.9242, 100.8786)">South Pattaya</a> <!-- Updated coordinate for South Pattaya -->
-            <a onclick="zoomToLocation(12.9179, 100.8551)">Pratumnak Hill</a> <!-- Updated coordinate for Pratumnak Hill -->
+        <div class="map-links">
+            <a onclick="zoomToLocation(12.9495, 100.8875, 15)">North</a> <!-- Updated coordinate for North Pattaya -->
+            <a onclick="zoomToLocation(12.9352, 100.8985, 15)">Central</a> <!-- Updated coordinate for Central Pattaya -->
+            <a onclick="zoomToLocation(12.9242, 100.8786, 15)">South</a> <!-- Updated coordinate for South Pattaya -->
+            <a onclick="zoomToLocation(12.9179, 100.8551, 15)">Pratumnak</a> <!-- Updated coordinate for Pratumnak Hill -->
+            <a onclick="zoomToLocation(12.8900, 100.8700, 14)">Jomtien</a> <!-- Southeast Jomtien -->
+        </div>
+
         </div>
 
         <!-- Contact Info -->
@@ -96,9 +100,9 @@
         }
 
         // Function to zoom and center the map at a given latitude and longitude
-        function zoomToLocation(lat, lng) {
+        function zoomToLocation(lat, lng, zoom) {
             map.setCenter({ lat: lat, lng: lng });
-            map.setZoom(15); // Adjust the zoom level as needed
+            map.setZoom(zoom);
         }
     </script>
 

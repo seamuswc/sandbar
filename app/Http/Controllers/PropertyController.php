@@ -99,12 +99,14 @@ class PropertyController extends Controller
             'lng' => 'required|numeric',
             'building' => 'required|string|max:255',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'notes' => 'nullable|string' 
+
         ]);
 
         // Find the property and update it
         $property = Property::findOrFail($id);
-        $property->update($request->only(['title', 'price', 'size', 'lat', 'lng', 'building', 'description']));
+        $property->update($request->only(['title', 'price', 'size', 'lat', 'lng', 'building', 'description', 'notes']));
 
         // Handle new image uploads if any
         if ($request->hasFile('images')) {
